@@ -2,22 +2,26 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #6a82fb, #fc5c7d);
-  margin: 0; padding: 0;
+  background-image: url('background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 40px 15px;
   color: #333;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 40px 15px;
 }
 
 .container {
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
   max-width: 520px;
   width: 100%;
   border-radius: 16px;
-  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.2);
   padding: 30px 40px;
   box-sizing: border-box;
   animation: fadeIn 0.8s ease forwards;
