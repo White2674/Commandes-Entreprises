@@ -11,10 +11,8 @@
     <h1>Récapitulatif de la commande</h1>
 
     <div id="deliveryInfo"></div>
-
     <div id="orderSummary"></div>
 
-    <!-- Groupe de boutons côte à côte -->
     <div class="button-group">
       <button id="backBtn" onclick="history.back()">Modifier la commande</button>
       <button id="sendOrderBtn">Envoyer la commande</button>
@@ -22,21 +20,17 @@
   </div>
 
   <script>
-    // Récupère les infos de livraison et commande
     const deliveryInfo = JSON.parse(sessionStorage.getItem("deliveryInfo"));
     const order = JSON.parse(sessionStorage.getItem("order"));
-
     const orderSummary = document.getElementById("orderSummary");
     const deliveryInfoDiv = document.getElementById("deliveryInfo");
     const sendOrderBtn = document.getElementById("sendOrderBtn");
 
-    // Si pas de session ou données invalides, redirige vers connexion
     if (!deliveryInfo || !order) {
       alert("Informations de commande manquantes. Veuillez vous reconnecter.");
       window.location.href = "index.html";
     }
 
-    // Affiche infos de livraison
     deliveryInfoDiv.innerHTML = `
       <p><strong>Contact :</strong> ${deliveryInfo.contactName}</p>
       <p><strong>Téléphone :</strong> ${deliveryInfo.contactPhone}</p>
@@ -44,7 +38,6 @@
       <p><strong>Heure de livraison :</strong> ${deliveryInfo.deliveryTime}</p>
     `;
 
-    // Crée un tableau récapitulatif des articles commandés
     let html = `
       <table>
         <thead>
@@ -86,32 +79,44 @@
 
     orderSummary.innerHTML = html;
 
-    // Bouton envoyer commande : ouvre client mail avec résumé pré-rempli
+    // Envoi vers Discord via webhook
     sendOrderBtn.addEventListener("click", () => {
       if (order.length === 0) {
         alert("Votre commande est vide.");
         return;
       }
 
-      let mailBody = `Bonjour,%0D%0A%0D%0AVoici ma commande:%0D%0A%0D%0A`;
+      const entreprise = sessionStorage.getItem("user");
+      const webhookUrl = "https://discord.com/api/webhooks/1326238596134473789/5JA4gUWB6aYIKlUWpV0TRZjvni9AL9rXRUPUhr4rPNN5IhlOhS2-_lbzRHsR5qqjU5ZL";
+
+      let message = `📦 **Nouvelle commande entreprise reçue**\n`;
+      message += `👤 **Entreprise** : ${entreprise}\n`;
+      message += `📞 **Contact** : ${deliveryInfo.contactName} (${deliveryInfo.contactPhone})\n`;
+      message += `📅 **Livraison** : ${deliveryInfo.deliveryDate} à ${deliveryInfo.deliveryTime}\n\n`;
+      message += `🧾 **Articles commandés :**\n`;
 
       order.forEach(item => {
-        mailBody += `${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}%0D%0A`;
+        message += `• ${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}\n`;
       });
 
-      mailBody += `%0D%0ATotal général: $${totalPrice.toFixed(2)}%0D%0A%0D%0A`;
+      message += `\n💰 **Total : $${totalPrice.toFixed(2)}**`;
 
-      mailBody += `Informations de livraison:%0D%0A`;
-      mailBody += `Contact: ${deliveryInfo.contactName}%0D%0A`;
-      mailBody += `Téléphone: ${deliveryInfo.contactPhone}%0D%0A`;
-      mailBody += `Date: ${deliveryInfo.deliveryDate}%0D%0A`;
-      mailBody += `Heure: ${deliveryInfo.deliveryTime}%0D%0A%0D%0A`;
-
-      mailBody += `Merci.%0D%0A`;
-
-      const mailtoLink = `mailto:tonemail@example.com?subject=Nouvelle commande&body=${mailBody}`;
-
-      window.location.href = mailtoLink;
+      fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: message }),
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("✅ Commande envoyée sur Discord !");
+        } else {
+          alert("❌ Erreur lors de l'envoi vers Discord.");
+        }
+      })
+      .catch(err => {
+        console.error("Erreur Discord webhook:", err);
+        alert("❌ Erreur lors de la connexion à Discord.");
+      });
     });
   </script>
 </body>
