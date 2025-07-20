@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connexion - Site Commande</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Connexion</h1>
+    <form id="loginForm">
+      <label for="username">Nom d'utilisateur :</label>
+      <input type="text" id="username" required />
+
+      <label for="password">Mot de passe :</label>
+      <input type="password" id="password" required />
+
+      <button type="submit">Se connecter</button>
+    </form>
+    <p id="errorMsg" style="color:red; text-align:center; margin-top:10px;"></p>
+  </div>
+
+  <script src="users.js"></script>
+  <script>
+    const form = document.getElementById("loginForm");
+    const errorMsg = document.getElementById("errorMsg");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = form.username.value.trim();
+      const password = form.password.value.trim();
+
+      if (checkUser(username, password)) {
+        // Sauvegarde en sessionStorage
+        sessionStorage.setItem("user", username);
+        // Redirection vers la page contact
+        window.location.href = "contact.html";
+      } else {
+        errorMsg.textContent = "Nom d'utilisateur ou mot de passe incorrect.";
+      }
+    });
+  </script>
+</body>
+</html>
