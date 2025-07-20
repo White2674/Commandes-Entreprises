@@ -40,6 +40,7 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  margin-top: 60px; /* ← Ajouté pour baisser le menu */
 }
 
 /* Titres */
