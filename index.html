@@ -1,46 +1,52 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Connexion - Site Commande</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Connexion</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+        label, input { display: block; margin-bottom: 10px; }
+        button { padding: 8px 15px; }
+        .error { color: red; margin-bottom: 10px; }
+    </style>
 </head>
 <body>
-
-  <div class="container">
     <h1>Connexion</h1>
-    <form id="loginForm">
-      <label for="username">Nom d'utilisateur :</label>
-      <input type="text" id="username" required />
+    <div id="error" class="error"></div>
+    <label for="username">Nom d'utilisateur :</label>
+    <input type="text" id="username" placeholder="Votre nom" />
+    <button id="loginBtn" disabled>Se connecter</button>
 
-      <label for="password">Mot de passe :</label>
-      <input type="password" id="password" required />
+    <script>
+        const usernameInput = document.getElementById('username');
+        const loginBtn = document.getElementById('loginBtn');
+        const errorDiv = document.getElementById('error');
 
-      <button type="submit">Se connecter</button>
-    </form>
-    <p id="errorMsg" style="color:red; text-align:center; margin-top:10px;"></p>
-  </div>
+        usernameInput.addEventListener('input', () => {
+            loginBtn.disabled = usernameInput.value.trim() === '';
+            errorDiv.textContent = '';
+        });
 
-  <script src="users.js"></script>
-  <script>
-    const form = document.getElementById("loginForm");
-    const errorMsg = document.getElementById("errorMsg");
+        loginBtn.addEventListener('click', () => {
+            const username = usernameInput.value.trim();
+            if (username === '') {
+                errorDiv.textContent = "Veuillez entrer un nom d'utilisateur.";
+                return;
+            }
+            // Sauvegarde en sessionStorage
+            sessionStorage.setItem("user", JSON.stringify({ username }));
+            // Redirection vers page commande
+            window.location.href = "order.html";
+        });
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const username = form.username.value.trim();
-      const password = form.password.value.trim();
-
-      if (checkUser(username, password)) {
-        // Sauvegarde en sessionStorage
-        sessionStorage.setItem("user", username);
-        // Redirection vers la page contact
-        window.location.href = "contact.html";
-      } else {
-        errorMsg.textContent = "Nom d'utilisateur ou mot de passe incorrect.";
-      }
-    });
-  </script>
+        // Si utilisateur déjà connecté, rediriger directement
+        window.addEventListener('load', () => {
+            const user = sessionStorage.getItem('user');
+            if (user) {
+                window.location.href = "order.html";
+            }
+        });
+    </script>
 </body>
 </html>
