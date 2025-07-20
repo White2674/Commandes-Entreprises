@@ -13,7 +13,7 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center; /* ✅ Centré verticalement */
+  align-items: center;
 }
 
 .container {
@@ -170,14 +170,24 @@ tfoot tr td:first-child {
   text-align: left;
 }
 
-#logoutBtn {
-  background: #e24444 !important;
-  box-shadow: 0 5px 15px rgba(226, 68, 68, 0.4) !important;
+/* Nouveau bouton "Modifier la commande" */
+#backBtn {
+  background: #6a82fb;
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+  margin-top: 30px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(106, 130, 251, 0.4);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
-#logoutBtn:hover {
-  background: #b73232 !important;
-  box-shadow: 0 8px 20px rgba(183, 50, 50, 0.6) !important;
+#backBtn:hover {
+  background: #4e64d9;
+  box-shadow: 0 8px 20px rgba(78, 100, 217, 0.6);
 }
 
 /* Animation */
