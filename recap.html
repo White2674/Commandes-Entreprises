@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Récapitulatif - Site Commande</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Récapitulatif de la commande</h1>
+
+    <div id="deliveryInfo"></div>
+    <div id="orderSummary"></div>
+
+    <button id="logoutBtn" style="background:#e24444; margin-top:20px;">Déconnexion</button>
+  </div>
+
+  <script>
+    if (!sessionStorage.getItem("user")) {
+      alert("Veuillez vous connecter d'abord.");
+      window.location.href = "index.html";
+    }
+
+    const deliveryInfoDiv = document.getElementById("deliveryInfo");
+    const orderSummaryDiv = document.getElementById("orderSummary");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    // Afficher infos livraison
+    const deliveryInfo = JSON.parse(sessionStorage.getItem("deliveryInfo"));
+    if (deliveryInfo) {
+      deliveryInfoDiv.innerHTML = `
+        <h2>Informations de livraison</h2>
+        <p><strong>Nom du contact :</strong> ${deliveryInfo.contactName}</p>
+        <p><strong>Numéro(s) :</strong> ${deliveryInfo.contactPhone}</p>
+        <p><strong>Date :</strong> ${deliveryInfo.deliveryDate}</p>
+        <p><strong>Heure :</strong> ${deliveryInfo.deliveryTime}</p>
+      `;
+    } else {
+      deliveryInfoDiv.innerHTML = "<p style='color:red'>Aucune information de livraison.</p>";
+    }
+
+    // Afficher résumé commande
+    const order = JSON.parse(sessionStorage.getItem("order")) || [];
+
+    if (order.length === 0) {
+      orderSummaryDiv.innerHTML = "<p>Aucune commande trouvée.</p>";
+    } else {
+      let total = 0;
+      let html = "<h2>Détails de la commande</h2><table style='width:100%; border-collapse: collapse;'>"+
+                 "<thead><tr><th>Article</th><th>Quantité</th><th>Prix unitaire (€)</th><th>Total (€)</th></tr></thead><tbody>";
+
+      order.forEach(item => {
+        const lineTotal = item.price * item.quantity;
+        total += lineTotal;
+        html += `<tr style="border-bottom:1px solid #ddd;">
+          <td>${item.name}</td>
+          <td style="text-align:center;">${item.quantity}</td>
+          <td style="text-align:right;">${item.price.toFixed(2)}</td>
+          <td style="text-align:right;">${lineTotal.toFixed(2)}</td>
+        </tr>`;
+      });
+
+      html += `</tbody>
+        <tfoot>
+          <tr style="font-weight:bold; border-top: 2px solid #333;">
+            <td colspan="3" style="text-align:right;">Total général (€)</td>
+            <td style="text-align:right;">${total.toFixed(2)}</td>
+          </tr>
+        </tfoot>
+      </table>`;
+
+      orderSummaryDiv.innerHTML = html;
+    }
+
+    // Déconnexion : vider sessionStorage et revenir à la connexion
+    logoutBtn.addEventListener("click", () => {
+      sessionStorage.clear();
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
