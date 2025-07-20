@@ -8,12 +8,12 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   margin: 0;
-  padding: 120px 15px 40px; /* ✅ espace en haut pour le logo */
+  padding: 0; /* supprimé le padding en haut */
   color: #333;
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center; /* centré verticalement */
   position: relative;
 }
 
@@ -31,16 +31,17 @@ body {
 
 .container {
   background: rgba(255, 255, 255, 0.95);
-  max-width: 520px;
+  max-width: 460px; /* un peu moins large */
   width: 100%;
   border-radius: 16px;
   box-shadow: 0 12px 25px rgba(0,0,0,0.2);
-  padding: 30px 40px;
+  padding: 25px 30px; /* un peu moins de padding */
   box-sizing: border-box;
   animation: fadeIn 0.8s ease forwards;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center; /* centrer le texte */
 }
 
 h1, h2 {
