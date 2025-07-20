@@ -170,7 +170,19 @@ tfoot tr td:first-child {
   text-align: left;
 }
 
-/* Nouveau bouton "Modifier la commande" */
+/* ✅ Nouveau groupe de boutons côte à côte */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.button-group button {
+  flex: 1;
+}
+
+/* ✅ Bouton modifier (si utilisé indépendamment) */
 #backBtn {
   background: #6a82fb;
   color: white;
@@ -179,7 +191,6 @@ tfoot tr td:first-child {
   border: none;
   border-radius: 10px;
   padding: 14px;
-  margin-top: 30px;
   cursor: pointer;
   box-shadow: 0 5px 15px rgba(106, 130, 251, 0.4);
   transition: background 0.3s ease, box-shadow 0.3s ease;
