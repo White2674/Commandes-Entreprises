@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Récapitulatif - Site Commande</title>
+  <title>Récapitulatif de la commande</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -11,69 +11,108 @@
     <h1>Récapitulatif de la commande</h1>
 
     <div id="deliveryInfo"></div>
+
     <div id="orderSummary"></div>
 
-    <button id="logoutBtn" style="background:#e24444; margin-top:20px;">Déconnexion</button>
+    <button id="sendOrderBtn">Envoyer la commande</button>
+    <button id="logoutBtn" style="background:#e24444; margin-top:15px;">Déconnexion</button>
   </div>
 
   <script>
-    if (!sessionStorage.getItem("user")) {
-      alert("Veuillez vous connecter d'abord.");
+    // Récupère les infos de livraison et commande
+    const deliveryInfo = JSON.parse(sessionStorage.getItem("deliveryInfo"));
+    const order = JSON.parse(sessionStorage.getItem("order"));
+
+    const orderSummary = document.getElementById("orderSummary");
+    const deliveryInfoDiv = document.getElementById("deliveryInfo");
+    const sendOrderBtn = document.getElementById("sendOrderBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    // Si pas de session ou données invalides, redirige vers connexion
+    if (!deliveryInfo || !order) {
+      alert("Informations de commande manquantes. Veuillez vous reconnecter.");
       window.location.href = "index.html";
     }
 
-    const deliveryInfoDiv = document.getElementById("deliveryInfo");
-    const orderSummaryDiv = document.getElementById("orderSummary");
-    const logoutBtn = document.getElementById("logoutBtn");
+    // Affiche infos de livraison
+    deliveryInfoDiv.innerHTML = `
+      <p><strong>Contact :</strong> ${deliveryInfo.contactName}</p>
+      <p><strong>Téléphone :</strong> ${deliveryInfo.contactPhone}</p>
+      <p><strong>Date de livraison :</strong> ${deliveryInfo.deliveryDate}</p>
+      <p><strong>Heure de livraison :</strong> ${deliveryInfo.deliveryTime}</p>
+    `;
 
-    // Afficher infos livraison
-    const deliveryInfo = JSON.parse(sessionStorage.getItem("deliveryInfo"));
-    if (deliveryInfo) {
-      deliveryInfoDiv.innerHTML = `
-        <h2>Informations de livraison</h2>
-        <p><strong>Nom du contact :</strong> ${deliveryInfo.contactName}</p>
-        <p><strong>Numéro(s) :</strong> ${deliveryInfo.contactPhone}</p>
-        <p><strong>Date :</strong> ${deliveryInfo.deliveryDate}</p>
-        <p><strong>Heure :</strong> ${deliveryInfo.deliveryTime}</p>
-      `;
-    } else {
-      deliveryInfoDiv.innerHTML = "<p style='color:red'>Aucune information de livraison.</p>";
-    }
+    // Crée un tableau récapitulatif des articles commandés
+    let html = `
+      <table>
+        <thead>
+          <tr>
+            <th>Article</th>
+            <th>Prix unitaire</th>
+            <th>Quantité</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
 
-    // Afficher résumé commande
-    const order = JSON.parse(sessionStorage.getItem("order")) || [];
+    let totalPrice = 0;
 
-    if (order.length === 0) {
-      orderSummaryDiv.innerHTML = "<p>Aucune commande trouvée.</p>";
-    } else {
-      let total = 0;
-      let html = "<h2>Détails de la commande</h2><table style='width:100%; border-collapse: collapse;'>"+
-                 "<thead><tr><th>Article</th><th>Quantité</th><th>Prix unitaire (€)</th><th>Total (€)</th></tr></thead><tbody>";
-
-      order.forEach(item => {
-        const lineTotal = item.price * item.quantity;
-        total += lineTotal;
-        html += `<tr style="border-bottom:1px solid #ddd;">
+    order.forEach(item => {
+      const lineTotal = item.price * item.quantity;
+      totalPrice += lineTotal;
+      html += `
+        <tr>
           <td>${item.name}</td>
-          <td style="text-align:center;">${item.quantity}</td>
-          <td style="text-align:right;">${item.price.toFixed(2)}</td>
-          <td style="text-align:right;">${lineTotal.toFixed(2)}</td>
-        </tr>`;
-      });
+          <td>${item.price.toFixed(2)} €</td>
+          <td>${item.quantity}</td>
+          <td>${lineTotal.toFixed(2)} €</td>
+        </tr>
+      `;
+    });
 
-      html += `</tbody>
+    html += `
+        </tbody>
         <tfoot>
-          <tr style="font-weight:bold; border-top: 2px solid #333;">
-            <td colspan="3" style="text-align:right;">Total général (€)</td>
-            <td style="text-align:right;">${total.toFixed(2)}</td>
+          <tr>
+            <td colspan="3"><strong>Total général</strong></td>
+            <td><strong>${totalPrice.toFixed(2)} €</strong></td>
           </tr>
         </tfoot>
-      </table>`;
+      </table>
+    `;
 
-      orderSummaryDiv.innerHTML = html;
-    }
+    orderSummary.innerHTML = html;
 
-    // Déconnexion : vider sessionStorage et revenir à la connexion
+    // Bouton envoyer commande : ouvre client mail avec résumé pré-rempli
+    sendOrderBtn.addEventListener("click", () => {
+      if (order.length === 0) {
+        alert("Votre commande est vide.");
+        return;
+      }
+
+      let mailBody = `Bonjour,%0D%0A%0D%0AVoici ma commande:%0D%0A%0D%0A`;
+
+      order.forEach(item => {
+        mailBody += `${item.name} x${item.quantity} - ${(item.price * item.quantity).toFixed(2)} €%0D%0A`;
+      });
+
+      mailBody += `%0D%0ATotal général: ${totalPrice.toFixed(2)} €%0D%0A%0D%0A`;
+
+      mailBody += `Informations de livraison:%0D%0A`;
+      mailBody += `Contact: ${deliveryInfo.contactName}%0D%0A`;
+      mailBody += `Téléphone: ${deliveryInfo.contactPhone}%0D%0A`;
+      mailBody += `Date: ${deliveryInfo.deliveryDate}%0D%0A`;
+      mailBody += `Heure: ${deliveryInfo.deliveryTime}%0D%0A%0D%0A`;
+
+      mailBody += `Merci.%0D%0A`;
+
+      const mailtoLink = `mailto:tonemail@example.com?subject=Nouvelle commande&body=${mailBody}`;
+
+      window.location.href = mailtoLink;
+    });
+
+    // Bouton déconnexion : supprime session et revient à la page login
     logoutBtn.addEventListener("click", () => {
       sessionStorage.clear();
       window.location.href = "index.html";
