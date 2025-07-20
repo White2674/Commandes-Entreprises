@@ -6,52 +6,51 @@
   <title>Infos Livraison - Site Commande</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="top-aligned"> <!-- Ajout de la classe ici -->
-  <!-- Logo ajouté en haut -->
-  <img src="https://cdn.discordapp.com/attachments/1009082381862445128/1393295230257598545/image.png?ex=687ddb8d&is=687c8a0d&hm=510e54e939358b4e0d8125a94a1de3a68a0813e96d0cdce1a212b9cf0ef5516f&" alt="Logo" class="logo-top" />
-
+<body class="top-aligned">
   <div class="container">
     <h1>Informations de livraison</h1>
     <form id="contactForm">
-      <label for="contactName">Nom du contact :</label>
-      <input type="text" id="contactName" required />
+      <label for="name">Nom complet :</label><br />
+      <input type="text" id="name" name="name" required /><br />
 
-      <label for="contactPhone">Numéro(s) à contacter :</label>
-      <input type="tel" id="contactPhone" required />
+      <label for="address">Adresse :</label><br />
+      <input type="text" id="address" name="address" required /><br />
 
-      <label for="deliveryDate">Date de livraison :</label>
-      <input type="date" id="deliveryDate" required />
+      <label for="email">Email :</label><br />
+      <input type="email" id="email" name="email" required /><br />
 
-      <label for="deliveryTime">Heure de livraison :</label>
-      <input type="time" id="deliveryTime" required />
+      <label for="phone">Téléphone :</label><br />
+      <input type="tel" id="phone" name="phone" /><br />
 
-      <button type="submit">Valider</button>
+      <button type="submit">Valider la commande</button>
     </form>
   </div>
 
   <script>
-    // Vérifier que l'utilisateur est connecté
     if (!sessionStorage.getItem("user")) {
       alert("Veuillez vous connecter d'abord.");
       window.location.href = "index.html";
+    }
+    if (!sessionStorage.getItem("order")) {
+      alert("Veuillez sélectionner des articles d'abord.");
+      window.location.href = "catalogue.html";
     }
 
     const form = document.getElementById("contactForm");
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const infoLivraison = {
-        contactName: form.contactName.value.trim(),
-        contactPhone: form.contactPhone.value.trim(),
-        deliveryDate: form.deliveryDate.value,
-        deliveryTime: form.deliveryTime.value,
+      const data = {
+        name: form.name.value.trim(),
+        address: form.address.value.trim(),
+        email: form.email.value.trim(),
+        phone: form.phone.value.trim(),
       };
 
-      // Enregistrer dans sessionStorage
-      sessionStorage.setItem("deliveryInfo", JSON.stringify(infoLivraison));
+      // Simple validation additionnelle ici si besoin
 
-      // Aller vers catalogue
-      window.location.href = "catalogue.html";
+      sessionStorage.setItem("deliveryInfo", JSON.stringify(data));
+      window.location.href = "confirmation.html";
     });
   </script>
 </body>
