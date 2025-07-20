@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Infos Livraison - Site Commande</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Informations de livraison</h1>
+    <form id="contactForm">
+      <label for="contactName">Nom du contact :</label>
+      <input type="text" id="contactName" required />
+
+      <label for="contactPhone">Numéro(s) à contacter :</label>
+      <input type="tel" id="contactPhone" placeholder="+33 6 12 34 56 78" required />
+
+      <label for="deliveryDate">Date de livraison :</label>
+      <input type="date" id="deliveryDate" required />
+
+      <label for="deliveryTime">Heure de livraison :</label>
+      <input type="time" id="deliveryTime" required />
+
+      <button type="submit">Valider</button>
+    </form>
+  </div>
+
+  <script>
+    // Vérifier que l'utilisateur est connecté
+    if (!sessionStorage.getItem("user")) {
+      alert("Veuillez vous connecter d'abord.");
+      window.location.href = "index.html";
+    }
+
+    const form = document.getElementById("contactForm");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const infoLivraison = {
+        contactName: form.contactName.value.trim(),
+        contactPhone: form.contactPhone.value.trim(),
+        deliveryDate: form.deliveryDate.value,
+        deliveryTime: form.deliveryTime.value,
+      };
+
+      // Enregistrer dans sessionStorage
+      sessionStorage.setItem("deliveryInfo", JSON.stringify(infoLivraison));
+
+      // Aller vers catalogue
+      window.location.href = "catalogue.html";
+    });
+  </script>
+</body>
+</html>
