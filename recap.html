@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Récapitulatif de la commande</title>
-  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -14,20 +13,18 @@
     <div id="deliveryInfo"></div>
     <div id="orderSummary"></div>
 
-    <div class="button-group">
+    <div>
       <button id="backBtn" onclick="history.back()">Modifier la commande</button>
       <button id="sendOrderBtn">Envoyer la commande</button>
     </div>
   </div>
 
   <script>
-    // Vérifie que l'utilisateur est connecté
     if (!sessionStorage.getItem("user")) {
       alert("Veuillez vous connecter d'abord.");
       window.location.href = "index.html";
     }
 
-    // Récupère les infos de livraison et commande
     const deliveryInfo = JSON.parse(sessionStorage.getItem("deliveryInfo"));
     const order = JSON.parse(sessionStorage.getItem("order"));
 
@@ -40,7 +37,6 @@
     const deliveryInfoDiv = document.getElementById("deliveryInfo");
     const sendOrderBtn = document.getElementById("sendOrderBtn");
 
-    // Affiche infos de livraison (avec clés correctes)
     deliveryInfoDiv.innerHTML = `
       <p><strong>Nom complet :</strong> ${deliveryInfo.name}</p>
       <p><strong>Adresse :</strong> ${deliveryInfo.address}</p>
@@ -48,9 +44,8 @@
       <p><strong>Téléphone :</strong> ${deliveryInfo.phone || 'Non renseigné'}</p>
     `;
 
-    // Crée un tableau récapitulatif des articles commandés
     let html = `
-      <table>
+      <table border="1" cellpadding="5" cellspacing="0">
         <thead>
           <tr>
             <th>Article</th>
@@ -90,7 +85,6 @@
 
     orderSummary.innerHTML = html;
 
-    // Bouton envoyer commande : ouvre client mail avec résumé pré-rempli
     sendOrderBtn.addEventListener("click", () => {
       if (order.length === 0) {
         alert("Votre commande est vide.");
@@ -113,7 +107,6 @@
 
       mailBody += `Merci.%0D%0A`;
 
-      // Remplace par ton email réel ici
       const mailtoLink = `mailto:tonemail@example.com?subject=Nouvelle commande&body=${mailBody}`;
       window.location.href = mailtoLink;
     });
