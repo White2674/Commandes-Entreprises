@@ -64,9 +64,9 @@
       html += `
         <tr>
           <td>${item.name}</td>
-          <td>${item.price.toFixed(2)} €</td>
+          <td>$${item.price.toFixed(2)}</td>
           <td>${item.quantity}</td>
-          <td>${lineTotal.toFixed(2)} €</td>
+          <td>$${lineTotal.toFixed(2)}</td>
         </tr>
       `;
     });
@@ -76,7 +76,7 @@
         <tfoot>
           <tr>
             <td colspan="3"><strong>Total général</strong></td>
-            <td><strong>${totalPrice.toFixed(2)} €</strong></td>
+            <td><strong>$${totalPrice.toFixed(2)}</strong></td>
           </tr>
         </tfoot>
       </table>
@@ -94,10 +94,10 @@
       let mailBody = `Bonjour,%0D%0A%0D%0AVoici ma commande:%0D%0A%0D%0A`;
 
       order.forEach(item => {
-        mailBody += `${item.name} x${item.quantity} - ${(item.price * item.quantity).toFixed(2)} €%0D%0A`;
+        mailBody += `${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}%0D%0A`;
       });
 
-      mailBody += `%0D%0ATotal général: ${totalPrice.toFixed(2)} €%0D%0A%0D%0A`;
+      mailBody += `%0D%0ATotal général: $${totalPrice.toFixed(2)}%0D%0A%0D%0A`;
 
       mailBody += `Informations de livraison:%0D%0A`;
       mailBody += `Contact: ${deliveryInfo.contactName}%0D%0A`;
