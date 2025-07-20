@@ -16,6 +16,7 @@
   </div>
 
   <script>
+    // Vérifie que l'utilisateur est connecté
     if (!sessionStorage.getItem("user")) {
       alert("Veuillez vous connecter d'abord.");
       window.location.href = "index.html";
@@ -23,26 +24,26 @@
 
     // Liste des articles
     const articles = [
-      { id: 1, name: "Caoutchouc", price: 6, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396352604468019250/image_2025-07-20_064658351-removebg-preview.png?ex=687dc633&is=687c74b3&hm=9bcef405a7c5838be7aae6ae1a4e894f61e1810e903534f53a2708d325d1a91c&" },
-      { id: 2, name: "Encre", price: 6, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396352977094316093/image_2025-07-20_064825842-removebg-preview.png?ex=687dc68c&is=687c750c&hm=b2f61369704d454e45a8d8c9173b3b63e0c7ab89805d169389540bd5181f3d25&" },
-      { id: 3, name: "Eponge pour voiture", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396353141775274064/image_2025-07-20_064900049-removebg-preview.png?ex=687dc6b3&is=687c7533&hm=8b37b475e7c4f324fd4d24e61997d95e4f5073cbdb7568031f763c7cf6b12c8a&" },
-      { id: 4, name: "Bidon peinture", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396353487041724457/image_2025-07-20_065010388-removebg-preview.png?ex=687dc706&is=687c7586&hm=9bd8020c86c06e9aa72d8e8eb745935251cdab979b18022c10c60356c008d12b&" },
-      { id: 5, name: "Solvant", price: 22, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396353871625846905/image_2025-07-20_065125429-removebg-preview.png?ex=687dc761&is=687c75e1&hm=aba8f87e52aa7a269b945058598372e2c210fb50e355ad5861f1033e49d26ff4&" },
-      { id: 6, name: "Pâtes", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396354182772035594/image_2025-07-20_065314844-removebg-preview.png?ex=687dc7ac&is=687c762c&hm=8daea480d04a5c077321144f9f54fcb5b9f511ec950c200b35c3ee2308867acd&" },
-      { id: 7, name: "Nouilles", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396354304134221876/image_2025-07-20_065344347-removebg-preview.png?ex=687dc7c9&is=687c7649&hm=c83a30ae961a4d85253a3910f03d363d536cdb981d1e91e2e3a624dc98fb247e&" },
-      { id: 8, name: "Coca Zero", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396354487467114547/image_2025-07-20_065426263-removebg-preview.png?ex=687dc7f4&is=687c7674&hm=b2ff4e1a9826f0a2ed6765c71bfa8c7e51030f1afac1122dbb046e8deaab37c3&" },
-      { id: 9, name: "Caramel", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396354627548610592/image_2025-07-20_065459038-removebg-preview.png?ex=687dc816&is=687c7696&hm=488adef3812eaca84df5a570434250f74ffa8f6aaa9a277c31ab06f7b3a99dd1&" },
-      { id: 10, name: "Tortilla", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396355000023781406/image_2025-07-20_065629361-removebg-preview.png?ex=687dc86f&is=687c76ef&hm=ccedf5cada0c01385b7e25f83b69a7d6c1482ed637536c34350c925a42b462f1&" },
-      { id: 11, name: "Crème glacée", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396355486143484069/image_2025-07-20_065826545-removebg-preview.png?ex=687dc8e2&is=687c7762&hm=da14fe1d0345e9c2037eb5ec4aa41c43c33d01ee478c598222de627eeae5519f&" },
-      { id: 12, name: "Crème glacée (pot)", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396355632596123688/image_2025-07-20_065853685-removebg-preview.png?ex=687dc905&is=687c7785&hm=76158b78029fa05a7e755f17e89552e2ce9b4a2b870bf7cfe0896a6b6ee2374a&" },
-      { id: 13, name: "Crème fraiche", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396355755392634920/image_2025-07-20_065927736-removebg-preview.png?ex=687dc923&is=687c77a3&hm=606561fa6e5ee6560432ff47a88a82718351b66ed113fd997e7883574be76245&" },
-      { id: 14, name: "Moutarde", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396355858866114570/image_2025-07-20_065955050-removebg-preview.png?ex=687dc93b&is=687c77bb&hm=5ed162fa21a34ceec886b91b0268c2ab158f92086e3331594c766a5fc61d115d&" },
-      { id: 15, name: "Coquille à tacos", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396355951749107772/image_2025-07-20_070018869-removebg-preview.png?ex=687dc951&is=687c77d1&hm=0534a5e6e948e4a660c99daccd5037245db760514eeb55aebda51e46348c4097&" },
-      { id: 16, name: "Pain à burger", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396356192988823602/image_2025-07-20_070111651-removebg-preview.png?ex=687dc98b&is=687c780b&hm=0eb9994d2d90b446aafa799d8232239eeca35d858a3bac8d7121a5432484d890&" },
-      { id: 17, name: "Barre de chocolat", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396356044921245860/image_2025-07-20_070039378-removebg-preview.png?ex=687dc968&is=687c77e8&hm=75ef051b3f13dd64f4a44b1f42aab638d6b36efd7419ada6844fd536176465e1&" },
-      { id: 18, name: "Pain grillé", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396356338019467366/image_2025-07-20_070137097-removebg-preview.png?ex=687dc9ae&is=687c782e&hm=afd3ac9e378d53744cd0db8561c4685bada9d499c09de4b7842d0f7458eec40d&" },
-      { id: 19, name: "Bagel", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396356440406360084/image_2025-07-20_070213952-removebg-preview.png?ex=687dc9c6&is=687c7846&hm=70fbad155b54d8e8857967c88dfbaca59c845057cd25b93cb381207cb61133bb&" },
-      { id: 20, name: "Eau purifié", price: 1.75, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396356559809806396/image_2025-07-20_070241777-removebg-preview.png?ex=687dc9e2&is=687c7862&hm=87adf8355fbc73c6002fa84841816a6740a05feb56f2a43a0376b0a6e19a6c1f&" },
+      { id: 1, name: "Caoutchouc", price: 6, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396352604468019250/image_2025-07-20_064658351-removebg-preview.png" },
+      { id: 2, name: "Encre", price: 6, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396352977094316093/image_2025-07-20_064825842-removebg-preview.png" },
+      { id: 3, name: "Eponge pour voiture", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396353141775274064/image_2025-07-20_064900049-removebg-preview.png" },
+      { id: 4, name: "Bidon peinture", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396353487041724457/image_2025-07-20_065010388-removebg-preview.png" },
+      { id: 5, name: "Solvant", price: 22, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396353871625846905/image_2025-07-20_065125429-removebg-preview.png" },
+      { id: 6, name: "Pâtes", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396354182772035594/image_2025-07-20_065314844-removebg-preview.png" },
+      { id: 7, name: "Nouilles", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396354304134221876/image_2025-07-20_065344347-removebg-preview.png" },
+      { id: 8, name: "Coca Zero", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396354487467114547/image_2025-07-20_065426263-removebg-preview.png" },
+      { id: 9, name: "Caramel", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396354627548610592/image_2025-07-20_065459038-removebg-preview.png" },
+      { id: 10, name: "Tortilla", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396355000023781406/image_2025-07-20_065629361-removebg-preview.png" },
+      { id: 11, name: "Crème glacée", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396355486143484069/image_2025-07-20_065826545-removebg-preview.png" },
+      { id: 12, name: "Crème glacée (pot)", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396355632596123688/image_2025-07-20_065853685-removebg-preview.png" },
+      { id: 13, name: "Crème fraiche", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396355755392634920/image_2025-07-20_065927736-removebg-preview.png" },
+      { id: 14, name: "Moutarde", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396355858866114570/image_2025-07-20_065955050-removebg-preview.png" },
+      { id: 15, name: "Coquille à tacos", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396355951749107772/image_2025-07-20_070018869-removebg-preview.png" },
+      { id: 16, name: "Pain à burger", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396356192988823602/image_2025-07-20_070111651-removebg-preview.png" },
+      { id: 17, name: "Barre de chocolat", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396356044921245860/image_2025-07-20_070039378-removebg-preview.png" },
+      { id: 18, name: "Pain grillé", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396356338019467366/image_2025-07-20_070137097-removebg-preview.png" },
+      { id: 19, name: "Bagel", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396356440406360084/image_2025-07-20_070213952-removebg-preview.png" },
+      { id: 20, name: "Eau purifié", price: 1.75, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396356559809806396/image_2025-07-20_070241777-removebg-preview.png" },
     ];
 
     const articlesList = document.getElementById("articlesList");
