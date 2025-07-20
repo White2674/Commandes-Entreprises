@@ -5,12 +5,14 @@ body {
   background: url('https://media.discordapp.net/attachments/1009082381862445128/1396347307393421393/image.png?ex=687dc144&is=687c6fc4&hm=f399a8bed3f67092ac6a42df3761f8c023f714080547e33ee63d6d1110c32fd1&=&format=webp&quality=lossless&width=1392&height=822') no-repeat center center fixed;
   background-size: cover;
   margin: 0;
-  padding: 100px 0 0; /* padding top for fixed logo */
+  padding: 0;
   color: #2c2c2c;
   min-height: 100vh;
+
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+
   position: relative;
 }
 
@@ -33,14 +35,14 @@ body {
   width: 100%;
   border-radius: 18px;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-  padding: 30px 35px;
+  padding: 50px 35px 30px; /* padding top augmenté pour laisser de l’espace sous logo */
   box-sizing: border-box;
   animation: fadeInUp 0.9s ease forwards;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin-top: 60px; /* ← Ajouté pour baisser le menu */
+  margin: 0;
 }
 
 /* Titres */
