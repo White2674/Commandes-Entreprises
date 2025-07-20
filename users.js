@@ -5,7 +5,7 @@
 const users = [
   { username: "admin", password: "admin123" },
   { username: "client1", password: "motdepasse1" },
-  { username: "client2", password: "motdepasse2" }
+  { username: "client3", password: "motdepasse3" }
 ];
 
 // Fonction pour vérifier les identifiants
