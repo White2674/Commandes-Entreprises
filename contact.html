@@ -4,55 +4,51 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Infos Livraison - Site Commande</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <h1>Informations de livraison</h1>
     <form id="contactForm">
-      <label for="name">Nom complet :</label><br />
-      <input type="text" id="name" name="name" required /><br />
+      <label for="contactName">Nom du contact :</label>
+      <input type="text" id="contactName" required />
 
-      <label for="address">Adresse :</label><br />
-      <input type="text" id="address" name="address" required /><br />
+      <label for="contactPhone">Numéro(s) à contacter :</label>
+      <input type="tel" id="contactPhone" required />
 
-      <label for="email">Email :</label><br />
-      <input type="email" id="email" name="email" required /><br />
+      <label for="deliveryDate">Date de livraison :</label>
+      <input type="date" id="deliveryDate" required />
 
-      <label for="phone">Téléphone :</label><br />
-      <input type="tel" id="phone" name="phone" /><br />
+      <label for="deliveryTime">Heure de livraison :</label>
+      <input type="time" id="deliveryTime" required />
 
-      <button type="submit">Valider la commande</button>
+      <button type="submit">Valider</button>
     </form>
   </div>
 
   <script>
-    // Vérifie que l'utilisateur est connecté
+    // Vérifier que l'utilisateur est connecté
     if (!sessionStorage.getItem("user")) {
       alert("Veuillez vous connecter d'abord.");
       window.location.href = "index.html";
-    }
-
-    // Vérifie qu'il y a une commande en session
-    if (!sessionStorage.getItem("order")) {
-      alert("Veuillez sélectionner des articles d'abord.");
-      window.location.href = "catalogue.html";
     }
 
     const form = document.getElementById("contactForm");
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const data = {
-        name: form.name.value.trim(),
-        address: form.address.value.trim(),
-        email: form.email.value.trim(),
-        phone: form.phone.value.trim(),
+      const infoLivraison = {
+        contactName: form.contactName.value.trim(),
+        contactPhone: form.contactPhone.value.trim(),
+        deliveryDate: form.deliveryDate.value,
+        deliveryTime: form.deliveryTime.value,
       };
 
-      // Tu peux ajouter ici une validation supplémentaire si besoin
+      // Enregistrer dans sessionStorage
+      sessionStorage.setItem("deliveryInfo", JSON.stringify(infoLivraison));
 
-      sessionStorage.setItem("deliveryInfo", JSON.stringify(data));
-      window.location.href = "confirmation.html";
+      // Aller vers catalogue
+      window.location.href = "catalogue.html";
     });
   </script>
 </body>
