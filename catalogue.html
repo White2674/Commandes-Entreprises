@@ -4,64 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Catalogue - Site Commande</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 900px;
-      margin: 20px auto;
-      padding: 0 15px;
-    }
-    .container h1 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .article {
-      display: flex;
-      align-items: center;
-      border: 1px solid #ddd;
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 5px;
-    }
-    .article img {
-      max-width: 100px;
-      max-height: 100px;
-      object-fit: contain;
-      margin-right: 20px;
-    }
-    .article-details {
-      flex-grow: 1;
-      font-size: 1.1em;
-    }
-    .article-qty {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .article-qty label {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-    .article-qty input[type="number"] {
-      width: 60px;
-      padding: 5px;
-    }
-    button[type="submit"] {
-      display: block;
-      margin: 30px auto 0;
-      padding: 12px 25px;
-      font-size: 1.1em;
-      cursor: pointer;
-      background-color: #007bff;
-      border: none;
-      color: white;
-      border-radius: 5px;
-    }
-    button[type="submit"]:hover {
-      background-color: #0056b3;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
@@ -100,7 +42,7 @@
       { id: 17, name: "Barre de chocolat", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396356044921245860/image_2025-07-20_070039378-removebg-preview.png" },
       { id: 18, name: "Pain grillé", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396356338019467366/image_2025-07-20_070137097-removebg-preview.png" },
       { id: 19, name: "Bagel", price: 2, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396356440406360084/image_2025-07-20_070213952-removebg-preview.png" },
-      { id: 20, name: "Eau purifiée", price: 1.75, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396356559809806396/image_2025-07-20_070241777-removebg-preview.png" },
+      { id: 20, name: "Eau purifié", price: 1.75, img: "https://cdn.discordapp.com/attachments/1009082381862445128/1396356559809806396/image_2025-07-20_070241777-removebg-preview.png" },
     ];
 
     const articlesList = document.getElementById("articlesList");
@@ -114,11 +56,11 @@
         <img src="${art.img}" alt="${art.name}" />
         <div class="article-details">
           <strong>${art.name}</strong><br />
-          Prix : ${art.price.toFixed(2)} €
+          Prix : ${art.price.toFixed(2)} $
         </div>
         <div class="article-qty">
-          <label for="qty-${art.id}">Quantité :</label>
-          <input type="number" min="0" value="0" id="qty-${art.id}" name="qty-${art.id}" />
+          <label>Quantité :</label>
+          <input type="number" min="0" value="0" name="qty-${art.id}" />
         </div>
       `;
 
@@ -134,7 +76,7 @@
       const order = [];
 
       articles.forEach((art) => {
-        const qty = parseInt(formData.get(`qty-${art.id}`), 10) || 0;
+        const qty = parseInt(formData.get("qty-" + art.id), 10) || 0;
         if (qty > 0) {
           order.push({ ...art, quantity: qty });
         }
