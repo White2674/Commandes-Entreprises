@@ -8,19 +8,20 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   margin: 0;
-  padding: 0; /* padding supprimé en haut */
+  padding: 0;
   color: #333;
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center; /* centrage vertical */
+  align-items: flex-start; /* alignement en haut */
   position: relative;
+  padding-top: 100px; /* espace pour le logo fixe */
 }
 
 /* Logo en haut de la page, centré */
 .logo-top {
-  position: absolute;
-  top: 30px;
+  position: fixed; /* fixé en haut même au scroll */
+  top: 20px;
   left: 50%;
   transform: translateX(-50%);
   max-width: 180px;
@@ -35,13 +36,13 @@ body {
   width: 100%;
   border-radius: 16px;
   box-shadow: 0 12px 25px rgba(0,0,0,0.2);
-  padding: 25px 30px; /* padding un peu réduit */
+  padding: 25px 30px;
   box-sizing: border-box;
   animation: fadeIn 0.8s ease forwards;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center; /* texte centré */
+  text-align: center;
 }
 
 h1, h2 {
