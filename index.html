@@ -23,6 +23,7 @@
         const loginBtn = document.getElementById('loginBtn');
         const errorDiv = document.getElementById('error');
 
+        // Activer bouton seulement si champ non vide
         usernameInput.addEventListener('input', () => {
             loginBtn.disabled = usernameInput.value.trim() === '';
             errorDiv.textContent = '';
@@ -34,16 +35,15 @@
                 errorDiv.textContent = "Veuillez entrer un nom d'utilisateur.";
                 return;
             }
-            // Sauvegarde en sessionStorage
+            // Sauvegarder utilisateur en sessionStorage
             sessionStorage.setItem("user", JSON.stringify({ username }));
             // Redirection vers page commande
             window.location.href = "order.html";
         });
 
-        // Si utilisateur déjà connecté, rediriger directement
+        // Si utilisateur déjà connecté, redirection automatique
         window.addEventListener('load', () => {
-            const user = sessionStorage.getItem('user');
-            if (user) {
+            if (sessionStorage.getItem('user')) {
                 window.location.href = "order.html";
             }
         });
