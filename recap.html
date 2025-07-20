@@ -14,9 +14,7 @@
 
     <div id="orderSummary"></div>
 
-    <button id="sendOrderBtn">Envoyer la commande</button>
-    <button id="backBtn" onclick="history.back()">Modifier la commande</button>
-    <!-- ✅ Groupe de boutons côte à côte -->
+    <!-- Groupe de boutons côte à côte -->
     <div class="button-group">
       <button id="backBtn" onclick="history.back()">Modifier la commande</button>
       <button id="sendOrderBtn">Envoyer la commande</button>
@@ -31,7 +29,6 @@
     const orderSummary = document.getElementById("orderSummary");
     const deliveryInfoDiv = document.getElementById("deliveryInfo");
     const sendOrderBtn = document.getElementById("sendOrderBtn");
-    const logoutBtn = document.getElementById("logoutBtn");
 
     // Si pas de session ou données invalides, redirige vers connexion
     if (!deliveryInfo || !order) {
@@ -115,12 +112,6 @@
       const mailtoLink = `mailto:tonemail@example.com?subject=Nouvelle commande&body=${mailBody}`;
 
       window.location.href = mailtoLink;
-    });
-
-    // Bouton déconnexion : supprime session et revient à la page login
-    logoutBtn.addEventListener("click", () => {
-      sessionStorage.clear();
-      window.location.href = "index.html";
     });
   </script>
 </body>
