@@ -1,52 +1,45 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Connexion</title>
-    <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
-        label, input { display: block; margin-bottom: 10px; }
-        button { padding: 8px 15px; }
-        .error { color: red; margin-bottom: 10px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connexion - Site Commande</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="container">
     <h1>Connexion</h1>
-    <div id="error" class="error"></div>
-    <label for="username">Nom d'utilisateur :</label>
-    <input type="text" id="username" placeholder="Votre nom" />
-    <button id="loginBtn" disabled>Se connecter</button>
+    <form id="loginForm">
+      <label for="username">Nom d'utilisateur :</label>
+      <input type="text" id="username" required />
 
-    <script>
-        const usernameInput = document.getElementById('username');
-        const loginBtn = document.getElementById('loginBtn');
-        const errorDiv = document.getElementById('error');
+      <label for="password">Mot de passe :</label>
+      <input type="password" id="password" required />
 
-        // Activer bouton seulement si champ non vide
-        usernameInput.addEventListener('input', () => {
-            loginBtn.disabled = usernameInput.value.trim() === '';
-            errorDiv.textContent = '';
-        });
+      <button type="submit">Se connecter</button>
+    </form>
+    <p id="errorMsg" style="color:red; text-align:center; margin-top:10px;"></p>
+  </div>
 
-        loginBtn.addEventListener('click', () => {
-            const username = usernameInput.value.trim();
-            if (username === '') {
-                errorDiv.textContent = "Veuillez entrer un nom d'utilisateur.";
-                return;
-            }
-            // Sauvegarder utilisateur en sessionStorage
-            sessionStorage.setItem("user", JSON.stringify({ username }));
-            // Redirection vers page commande
-            window.location.href = "order.html";
-        });
+  <script src="users.js"></script>
+  <script>
+    const form = document.getElementById("loginForm");
+    const errorMsg = document.getElementById("errorMsg");
 
-        // Si utilisateur déjà connecté, redirection automatique
-        window.addEventListener('load', () => {
-            if (sessionStorage.getItem('user')) {
-                window.location.href = "order.html";
-            }
-        });
-    </script>
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = form.username.value.trim();
+      const password = form.password.value.trim();
+
+      if (checkUser(username, password)) {
+        // Sauvegarde en sessionStorage
+        sessionStorage.setItem("user", username);
+        // Redirection vers la page contact
+        window.location.href = "contact.html";
+      } else {
+        errorMsg.textContent = "Nom d'utilisateur ou mot de passe incorrect.";
+      }
+    });
+  </script>
 </body>
 </html>
