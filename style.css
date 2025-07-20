@@ -23,7 +23,7 @@ body {
   width: 100%;
   border-radius: 18px;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-  padding: 30px 35px 30px; /* padding top normal (sans espace pour logo) */
+  padding: 30px 35px 30px;
   box-sizing: border-box;
   animation: fadeInUp 0.9s ease forwards;
   display: flex;
