@@ -8,16 +8,16 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   margin: 0;
-  padding: 0; /* supprimé le padding en haut */
+  padding: 0; /* padding supprimé en haut */
   color: #333;
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center; /* centré verticalement */
+  align-items: center; /* centrage vertical */
   position: relative;
 }
 
-/* ✅ Logo en haut de la page, centré */
+/* Logo en haut de la page, centré */
 .logo-top {
   position: absolute;
   top: 30px;
@@ -31,17 +31,17 @@ body {
 
 .container {
   background: rgba(255, 255, 255, 0.95);
-  max-width: 460px; /* un peu moins large */
+  max-width: 460px; /* largeur réduite */
   width: 100%;
   border-radius: 16px;
   box-shadow: 0 12px 25px rgba(0,0,0,0.2);
-  padding: 25px 30px; /* un peu moins de padding */
+  padding: 25px 30px; /* padding un peu réduit */
   box-sizing: border-box;
   animation: fadeIn 0.8s ease forwards;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center; /* centrer le texte */
+  text-align: center; /* texte centré */
 }
 
 h1, h2 {
@@ -189,7 +189,7 @@ tfoot tr td:first-child {
   text-align: left;
 }
 
-/* ✅ Groupe de boutons côte à côte */
+/* Groupe de boutons côte à côte */
 .button-group {
   display: flex;
   justify-content: space-between;
@@ -202,7 +202,7 @@ tfoot tr td:first-child {
   flex: 1;
 }
 
-/* ✅ Bouton retour */
+/* Bouton retour */
 #backBtn {
   background: #6a82fb;
   color: white;
@@ -221,7 +221,7 @@ tfoot tr td:first-child {
   box-shadow: 0 8px 20px rgba(78, 100, 217, 0.6);
 }
 
-/* ✅ Animation d'apparition */
+/* Animation d'apparition */
 @keyframes fadeIn {
   from {opacity: 0; transform: translateY(20px);}
   to {opacity: 1; transform: translateY(0);}
