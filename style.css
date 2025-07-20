@@ -16,18 +16,6 @@ body {
   position: relative;
 }
 
-/* Logo fixe en haut et centré */
-.logo-top {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  max-width: 180px;
-  height: auto;
-  z-index: 1001;
-  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.2));
-}
-
 /* Conteneur principal */
 .container {
   background: rgba(255, 255, 255, 0.97);
@@ -35,7 +23,7 @@ body {
   width: 100%;
   border-radius: 18px;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-  padding: 50px 35px 30px; /* padding top augmenté pour laisser de l’espace sous logo */
+  padding: 30px 35px 30px; /* padding top normal (sans espace pour logo) */
   box-sizing: border-box;
   animation: fadeInUp 0.9s ease forwards;
   display: flex;
