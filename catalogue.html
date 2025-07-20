@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catalogue - Site Commande</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Catalogue</h1>
+    <form id="catalogueForm">
+      <div id="articlesList"></div>
+      <button type="submit">Voir le récapitulatif</button>
+    </form>
+  </div>
+
+  <script>
+    if (!sessionStorage.getItem("user")) {
+      alert("Veuillez vous connecter d'abord.");
+      window.location.href = "index.html";
+    }
+
+    // Liste des articles (tu peux modifier ici)
+    const articles = [
+      {
+        id: 1,
+        name: "Pizza 4 fromages",
+        price: 12,
+        img: "images/pizza4fromages.jpg",
+      },
+      {
+        id: 2,
+        name: "Salade César",
+        price: 8,
+        img: "images/salade-cesar.jpg",
+      },
+      {
+        id: 3,
+        name: "Pâtes Bolognaise",
+        price: 10,
+        img: "images/pates-bolognaise.jpg",
+      },
+    ];
+
+    const articlesList = document.getElementById("articlesList");
+
+    // Affiche les articles dans le formulaire
+    articles.forEach((art) => {
+      const articleDiv = document.createElement("div");
+      articleDiv.className = "article";
+
+      articleDiv.innerHTML = `
+        <img src="${art.img}" alt="${art.name}" />
+        <div class="article-details">
+          <strong>${art.name}</strong><br />
+          Prix : ${art.price} €
+        </div>
+        <div class="article-qty">
+          <label>Quantité :</label>
+          <input type="number" min="0" value="0" name="qty-${art.id}" />
+        </div>
+      `;
+
+      articlesList.appendChild(articleDiv);
+    });
+
+    // Envoi du formulaire
+    const form = document.getElementById("catalogueForm");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const order = [];
+
+      articles.forEach((art) => {
+        const qty = parseInt(formData.get(`qty-${art.id}`)) || 0;
+        if (qty > 0) {
+          order.push({ ...art, quantity: qty });
+        }
+      });
+
+      if (order.length === 0) {
+        alert("Veuillez sélectionner au moins un article.");
+        return;
+      }
+
+      sessionStorage.setItem("order", JSON.stringify(order));
+      window.location.href = "recap.html";
+    });
+  </script>
+</body>
+</html>
