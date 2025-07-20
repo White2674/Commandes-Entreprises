@@ -4,9 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Infos Livraison - Site Commande</title>
-  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="top-aligned">
+<body>
   <div class="container">
     <h1>Informations de livraison</h1>
     <form id="contactForm">
@@ -27,10 +26,13 @@
   </div>
 
   <script>
+    // Vérifie que l'utilisateur est connecté
     if (!sessionStorage.getItem("user")) {
       alert("Veuillez vous connecter d'abord.");
       window.location.href = "index.html";
     }
+
+    // Vérifie qu'il y a une commande en session
     if (!sessionStorage.getItem("order")) {
       alert("Veuillez sélectionner des articles d'abord.");
       window.location.href = "catalogue.html";
@@ -47,7 +49,7 @@
         phone: form.phone.value.trim(),
       };
 
-      // Simple validation additionnelle ici si besoin
+      // Tu peux ajouter ici une validation supplémentaire si besoin
 
       sessionStorage.setItem("deliveryInfo", JSON.stringify(data));
       window.location.href = "confirmation.html";
