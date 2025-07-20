@@ -79,7 +79,7 @@
 
     orderSummary.innerHTML = html;
 
-    // Envoi vers Discord via webhook
+    // Envoi vers Discord via embed stylée
     sendOrderBtn.addEventListener("click", () => {
       if (order.length === 0) {
         alert("Votre commande est vide.");
@@ -89,22 +89,58 @@
       const entreprise = sessionStorage.getItem("user");
       const webhookUrl = "https://discord.com/api/webhooks/1326238596134473789/5JA4gUWB6aYIKlUWpV0TRZjvni9AL9rXRUPUhr4rPNN5IhlOhS2-_lbzRHsR5qqjU5ZL";
 
-      let message = `📦 **Nouvelle commande entreprise reçue**\n`;
-      message += `👤 **Entreprise** : ${entreprise}\n`;
-      message += `📞 **Contact** : ${deliveryInfo.contactName} (${deliveryInfo.contactPhone})\n`;
-      message += `📅 **Livraison** : ${deliveryInfo.deliveryDate} à ${deliveryInfo.deliveryTime}\n\n`;
-      message += `🧾 **Articles commandés :**\n`;
-
+      let itemList = "";
       order.forEach(item => {
-        message += `• ${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}\n`;
+        itemList += `• ${item.name} x${item.quantity} – $${(item.price * item.quantity).toFixed(2)}\n`;
       });
 
-      message += `\n💰 **Total : $${totalPrice.toFixed(2)}**`;
+      const payload = {
+        embeds: [
+          {
+            title: "🧾 Nouvelle commande entreprise",
+            color: 0x3498db, // Bleu clair
+            thumbnail: {
+              url: "https://cdn.discordapp.com/attachments/1009082381862445128/1393295230257598545/image.png?ex=687ddb8d&is=687c8a0d&hm=510e54e939358b4e0d8125a94a1de3a68a0813e96d0cdce1a212b9cf0ef5516f&"
+            },
+            fields: [
+              {
+                name: "🏢 Entreprise",
+                value: entreprise || "Non spécifiée",
+                inline: true
+              },
+              {
+                name: "📅 Livraison",
+                value: `${deliveryInfo.deliveryDate} à ${deliveryInfo.deliveryTime}`,
+                inline: true
+              },
+              {
+                name: "📞 Contact",
+                value: `${deliveryInfo.contactName} – ${deliveryInfo.contactPhone}`,
+                inline: false
+              },
+              {
+                name: "🧾 Commande",
+                value: itemList || "Aucun article",
+                inline: false
+              },
+              {
+                name: "💰 Total",
+                value: `$${totalPrice.toFixed(2)}`,
+                inline: false
+              }
+            ],
+            footer: {
+              text: "Commande envoyée depuis le site web"
+            },
+            timestamp: new Date().toISOString()
+          }
+        ]
+      };
 
       fetch(webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: message }),
+        body: JSON.stringify(payload)
       })
       .then(response => {
         if (response.ok) {
