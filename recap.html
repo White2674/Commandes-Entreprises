@@ -4,48 +4,48 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Récapitulatif de la commande</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
   <div class="container">
     <h1>Récapitulatif de la commande</h1>
 
     <div id="deliveryInfo"></div>
     <div id="orderSummary"></div>
 
-    <div>
+    <!-- ✅ Groupe de boutons côte à côte -->
+    <div class="button-group">
       <button id="backBtn" onclick="history.back()">Modifier la commande</button>
       <button id="sendOrderBtn">Envoyer la commande</button>
     </div>
   </div>
 
   <script>
-    if (!sessionStorage.getItem("user")) {
-      alert("Veuillez vous connecter d'abord.");
-      window.location.href = "index.html";
-    }
-
+    // Récupère les infos de livraison et commande
     const deliveryInfo = JSON.parse(sessionStorage.getItem("deliveryInfo"));
     const order = JSON.parse(sessionStorage.getItem("order"));
-
-    if (!deliveryInfo || !order) {
-      alert("Informations de commande manquantes. Veuillez recommencer.");
-      window.location.href = "index.html";
-    }
 
     const orderSummary = document.getElementById("orderSummary");
     const deliveryInfoDiv = document.getElementById("deliveryInfo");
     const sendOrderBtn = document.getElementById("sendOrderBtn");
 
-    deliveryInfoDiv.innerHTML = `
-      <p><strong>Nom complet :</strong> ${deliveryInfo.name}</p>
-      <p><strong>Adresse :</strong> ${deliveryInfo.address}</p>
-      <p><strong>Email :</strong> ${deliveryInfo.email}</p>
-      <p><strong>Téléphone :</strong> ${deliveryInfo.phone || 'Non renseigné'}</p>
-    `;
+    // Si pas de session ou données invalides, redirige vers connexion
+    if (!deliveryInfo || !order) {
+      alert("Informations de commande manquantes. Veuillez vous reconnecter.");
+      window.location.href = "index.html";
+    }
 
-    let html = `
-      <table border="1" cellpadding="5" cellspacing="0">
+    // Affiche infos de livraison
+    deliveryInfoDiv.innerHTML = 
+      <p><strong>Contact :</strong> ${deliveryInfo.contactName}</p>
+      <p><strong>Téléphone :</strong> ${deliveryInfo.contactPhone}</p>
+      <p><strong>Date de livraison :</strong> ${deliveryInfo.deliveryDate}</p>
+      <p><strong>Heure de livraison :</strong> ${deliveryInfo.deliveryTime}</p>
+    ;
+
+    // Crée un tableau récapitulatif des articles commandés
+    let html = 
+      <table>
         <thead>
           <tr>
             <th>Article</th>
@@ -55,24 +55,24 @@
           </tr>
         </thead>
         <tbody>
-    `;
+    ;
 
     let totalPrice = 0;
 
     order.forEach(item => {
       const lineTotal = item.price * item.quantity;
       totalPrice += lineTotal;
-      html += `
+      html += 
         <tr>
           <td>${item.name}</td>
           <td>$${item.price.toFixed(2)}</td>
           <td>${item.quantity}</td>
           <td>$${lineTotal.toFixed(2)}</td>
         </tr>
-      `;
+      ;
     });
 
-    html += `
+    html += 
         </tbody>
         <tfoot>
           <tr>
@@ -81,35 +81,35 @@
           </tr>
         </tfoot>
       </table>
-    `;
+    ;
 
     orderSummary.innerHTML = html;
 
+    // Bouton envoyer commande : ouvre client mail avec résumé pré-rempli
     sendOrderBtn.addEventListener("click", () => {
       if (order.length === 0) {
         alert("Votre commande est vide.");
         return;
       }
 
-      let mailBody = `Bonjour,%0D%0A%0D%0AVoici ma commande:%0D%0A%0D%0A`;
+      let mailBody = Bonjour,%0D%0A%0D%0AVoici ma commande:%0D%0A%0D%0A;
 
       order.forEach(item => {
-        mailBody += `${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}%0D%0A`;
+        mailBody += ${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}%0D%0A;
       });
 
-      mailBody += `%0D%0ATotal général: $${totalPrice.toFixed(2)}%0D%0A%0D%0A`;
+      mailBody += %0D%0ATotal général: $${totalPrice.toFixed(2)}%0D%0A%0D%0A;
 
-      mailBody += `Informations de livraison:%0D%0A`;
-      mailBody += `Nom complet: ${deliveryInfo.name}%0D%0A`;
-      mailBody += `Adresse: ${deliveryInfo.address}%0D%0A`;
-      mailBody += `Email: ${deliveryInfo.email}%0D%0A`;
-      mailBody += `Téléphone: ${deliveryInfo.phone || 'Non renseigné'}%0D%0A%0D%0A`;
+      mailBody += Informations de livraison:%0D%0A;
+      mailBody += Contact: ${deliveryInfo.contactName}%0D%0A;
+      mailBody += Téléphone: ${deliveryInfo.contactPhone}%0D%0A;
+      mailBody += Date: ${deliveryInfo.deliveryDate}%0D%0A;
+      mailBody += Heure: ${deliveryInfo.deliveryTime}%0D%0A%0D%0A;
 
-      mailBody += `Merci.%0D%0A`;
+      mailBody += Merci.%0D%0A;
 
-      const mailtoLink = `mailto:tonemail@example.com?subject=Nouvelle commande&body=${mailBody}`;
+      const mailtoLink = mailto:tonemail@example.com?subject=Nouvelle commande&body=${mailBody};
       window.location.href = mailtoLink;
     });
   </script>
 </body>
-</html>
