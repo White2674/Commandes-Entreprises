@@ -98,7 +98,7 @@
       });
 
       const payload = {
-        content: "<@&1297858230495739915>", // mention rôle
+        content: "<@&129785823049573991>", // mention rôle
         embeds: [
           {
             title: "🧾 Nouvelle commande entreprise",
@@ -148,23 +148,27 @@
         body: JSON.stringify(payload)
       })
       .then(response => {
+        console.log("Envoi webhook général status:", response.status);
         if (!response.ok) throw new Error("Erreur lors de l'envoi au webhook général");
 
-        // Si entreprise a webhook perso, envoi aussi
+        // Envoi webhook spécifique si existe
         if (companyWebhooks[entreprise]) {
           return fetch(companyWebhooks[entreprise], {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
+          })
+          .then(response => {
+            console.log(`Envoi webhook spécifique (${entreprise}) status:`, response.status);
+            if (!response.ok) throw new Error(`Erreur lors de l'envoi au webhook spécifique pour ${entreprise}`);
           });
         }
       })
-      .then(response => {
-        if (response && !response.ok) throw new Error("Erreur lors de l'envoi au webhook spécifique");
+      .then(() => {
         alert("✅ Commande envoyée sur Discord !");
       })
       .catch(err => {
-        console.error(err);
+        console.error("Erreur Discord webhook:", err);
         alert("❌ Erreur lors de l'envoi vers Discord.");
       });
     });
