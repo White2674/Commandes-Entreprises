@@ -97,34 +97,34 @@
       const payload = {
         embeds: [
           {
-            title: "🧾 Nouvelle commande entreprise",
+            title: "# 🧾 Nouvelle commande entreprise",
             color: 0x3498db, // Bleu clair
             thumbnail: {
               url: "https://cdn.discordapp.com/attachments/1009082381862445128/1393295230257598545/image.png?ex=687ddb8d&is=687c8a0d&hm=510e54e939358b4e0d8125a94a1de3a68a0813e96d0cdce1a212b9cf0ef5516f&"
             },
             fields: [
               {
-                name: "🏢 Entreprise",
+                name: "__🏢 Entreprise__",
                 value: entreprise || "Non spécifiée",
                 inline: true
               },
               {
-                name: "📅 Livraison",
+                name: "__📅 Livraison__",
                 value: `${deliveryInfo.deliveryDate} à ${deliveryInfo.deliveryTime}`,
                 inline: true
               },
               {
-                name: "📞 Contact",
+                name: "__📞 Contact__",
                 value: `${deliveryInfo.contactName} – ${deliveryInfo.contactPhone}`,
                 inline: false
               },
               {
-                name: "🧾 Commande",
+                name: "__🧾 Commande__",
                 value: itemList || "Aucun article",
                 inline: false
               },
               {
-                name: "💰 Total",
+                name: "__💰 Total__",
                 value: `$${totalPrice.toFixed(2)}`,
                 inline: false
               }
