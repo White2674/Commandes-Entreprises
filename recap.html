@@ -22,6 +22,7 @@
   <script>
     const deliveryInfo = JSON.parse(sessionStorage.getItem("deliveryInfo"));
     const order = JSON.parse(sessionStorage.getItem("order"));
+    const entreprise = sessionStorage.getItem("user");
     const orderSummary = document.getElementById("orderSummary");
     const deliveryInfoDiv = document.getElementById("deliveryInfo");
     const sendOrderBtn = document.getElementById("sendOrderBtn");
@@ -79,39 +80,37 @@
 
     orderSummary.innerHTML = html;
 
+    const generalWebhookUrl = "https://discord.com/api/webhooks/1326238596134473789/5JA4gUWB6aYIKlUWpV0TRZjvni9AL9rXRUPUhr4rPNN5IhlOhS2-_lbzRHsR5qqjU5ZL";
+    const companyWebhooks = {
+      "admin": "https://discord.com/api/webhooks/1352927762809356349/CQqc_s_6arFf6rMcHALA2oB7q2dQWSyNz1AvkuGHTrZJILGtHFieC6WcYMvsjWc3CmfM",
+      "Custom Motors": "https://discord.com/api/webhooks/1326238659615391756/HvKHn3Z4rLELeh4i0B-6mbIqcJDAIl9UIMw0K8OCBGuaXdlP2I8ZV25lXdMQqRUK84FQ",
+      "Benny's": "https://discord.com/api/webhooks/1326238760857374842/oSm-_34qtH-5bYxyBjWjjn_k2VlXFkeacCf-sVCKDqwJNMORcQDe87aK2TW8s4g0TfxG",
+      "Flywheels": "https://discord.com/api/webhooks/1354141331257032734/C8c0cehxR-Oimm8p4Ies_wtnifh4N8LDmMLaX2sIejsxzJu0sd3RG4AJUK8i5wEPAEyG",
+      "LS Customs": "https://discord.com/api/webhooks/1326239002646286527/M49NtVT1w2zBmRqeYNer-Qsy7ZahrTV3wPi78KLIJwACqvrWnjrhwu2p3iOHiyf5Cnu4",
+      "Auto-Exotic": "https://discord.com/api/webhooks/1396658802216013874/bjtGmJkKOFbrDItOeWjBXhvo4MmDK2iGWT81kYywArATprcKtxtmPdXf6CeqogLWwiwg",
+      "Esthétique Grove Street": "https://discord.com/api/webhooks/1326239134481649695/0gVfrNCtcNVnzp7w_XGPQhAC1eaaUGJ7-CM5PGwSf3ROB5LfYalyv0vRDrTfXXbJmr9M",
+      "Esthétique Paleto": "https://discord.com/api/webhooks/1326239578968948828/pkX43s4lxBQbw4sW3c0XISqngrUdDF3EtO2YiMxz4Om-0D9GHpX2NT5yONHxY0XkOHLt",
+      "Esthétique Vespucci": "https://discord.com/api/webhooks/1329587978737025064/ymwWdb56LAZ69DTfLBkb9OHdGd_2tCMjsIRnwJXd31FmrZUuLfMkpQ77UJxKsgdmKN3k",
+      "Esthétique Vinewood": "https://discord.com/api/webhooks/1341812837198204938/LkcFVLgefq-H3XUFJacbv5tQVQVYkF9sbhhUvYBdBc7i3XnXeNSgCn1uJbhPts6hKmhV",
+      "Esthétique Sandy": "https://discord.com/api/webhooks/1396659593844887582/r3hWwNdm0xmddErd1IQaJaUKXYtKeRwCMocihG-21OSNvc6coY5kfw5P9tKLpzR_Z2N6",
+      "Yellow Jack": "https://discord.com/api/webhooks/1338977748454080542/AuxUojInxgt-d8ThhBph6FgXLKz478FBSTO2YwuNN3CrSW3z5AO8ZXuimVOlkTUb44CO",
+      "Vice Room": "https://discord.com/api/webhooks/1396659841384189985/yl9Dnj89FEBjOS8eWu4yFbVvPJ6oyMw-he_TbjAWL3FkUEAY42Fiq01wiZE4hQNMeQY-",
+      "Dock Tease": "https://discord.com/api/webhooks/1326238588962345040/iZV84lPTZnK-uO9zrTP-hJ6FfSThscc9nOzLX98z5O3zwT3FgJSrMpN6nBOXM_Vwqiiv",
+      "Maze Event": "https://discord.com/api/webhooks/1348804922509885611/jzFZCASkxAdRRLcoxyNG-_ep8RTcvIOgSu9L2u01ejpH0JCqe9s3bXou6JFlmtZfqvSr",
+      "Pearl's": "https://discord.com/api/webhooks/1326239289402458112/aR-Fs0cUZ8DughnVbdMZ86ETNgI66g68DVqTIWaWmv5yZNb6LFOKKd8VjllbhSf4lmUn",
+      "Hen House": "https://discord.com/api/webhooks/1326239202639220847/LCqAUhvtG4CpWnxxDHb7ttzBCgm-xmZBE35P9mCMm70Di85aPIn35z94l6CR0hVJN7FL",
+      "Uwu Café": "https://discord.com/api/webhooks/1354130304704708809/pV_p6WVPR8Fc6_TjzPB9ZCaHo1b3OAk93xWzuiwZcql2mqujtG5E8GYi-GU3YX_kIZpb",
+      "Delight": "https://discord.com/api/webhooks/1326233862367612969/Z09SyyohE_8jKLfbBAF6ejNF_XQmv7aDg4eWug0ICiA5WJk2Icx_-Enpt8MOlCKPgiOk",
+      "Rex Diner": "https://discord.com/api/webhooks/1326239364686024816/UTGBQNFl2b8pPRUm9RaDZiMZazzSTWrAwePa3Spj9ujzvKZMizKabL071fHqxGz2QIGu",
+      "Paradiso": "https://discord.com/api/webhooks/1396660996449239051/-NxbdaqQ1cU1kaVoenZQnnYJQ-KqMRQfLy22X0-qPcn9wcsixdBsw78sWvB-ZaTJ-yDJ",
+      "LD Organics": "https://discord.com/api/webhooks/1326239516943450247/pP3N1zB_x9ueD15B-HDd7XzpnFWNGgW7gMEX_-F7H_cdQEhLPTsiXfQSP-1atrF9rKrZ"
+    };
+
     sendOrderBtn.addEventListener("click", () => {
       if (order.length === 0) {
         alert("Votre commande est vide.");
         return;
       }
-
-      const entreprise = sessionStorage.getItem("user");
-
-      const generalWebhookUrl = "https://discord.com/api/webhooks/1326238596134473789/5JA4gUWB6aYIKlUWpV0TRZjvni9AL9rXRUPUhr4rPNN5IhlOhS2-_lbzRHsR5qqjU5ZL";
-      const companyWebhooks = {
-        "admin": "https://discord.com/api/webhooks/1352927762809356349/CQqc_s_6arFf6rMcHALA2oB7q2dQWSyNz1AvkuGHTrZJILGtHFieC6WcYMvsjWc3CmfM",
-        "Custom Motors": "https://discord.com/api/webhooks/1326238659615391756/HvKHn3Z4rLELeh4i0B-6mbIqcJDAIl9UIMw0K8OCBGuaXdlP2I8ZV25lXdMQqRUK84FQ",
-        "Benny's": "https://discord.com/api/webhooks/1326238760857374842/oSm-_34qtH-5bYxyBjWjjn_k2VlXFkeacCf-sVCKDqwJNMORcQDe87aK2TW8s4g0TfxG",
-        "Flywheels": "https://discord.com/api/webhooks/1354141331257032734/C8c0cehxR-Oimm8p4Ies_wtnifh4N8LDmMLaX2sIejsxzJu0sd3RG4AJUK8i5wEPAEyG",
-        "LS Customs": "https://discord.com/api/webhooks/1326239002646286527/M49NtVT1w2zBmRqeYNer-Qsy7ZahrTV3wPi78KLIJwACqvrWnjrhwu2p3iOHiyf5Cnu4",
-        "Auto-Exotic": "https://discord.com/api/webhooks/1396658802216013874/bjtGmJkKOFbrDItOeWjBXhvo4MmDK2iGWT81kYywArATprcKtxtmPdXf6CeqogLWwiwg",
-        "Esthétique Grove Street": "https://discord.com/api/webhooks/1326239134481649695/0gVfrNCtcNVnzp7w_XGPQhAC1eaaUGJ7-CM5PGwSf3ROB5LfYalyv0vRDrTfXXbJmr9M",
-        "Esthétique Paleto": "https://discord.com/api/webhooks/1326239578968948828/pkX43s4lxBQbw4sW3c0XISqngrUdDF3EtO2YiMxz4Om-0D9GHpX2NT5yONHxY0XkOHLt",
-        "Esthétique Vespucci": "https://discord.com/api/webhooks/1329587978737025064/ymwWdb56LAZ69DTfLBkb9OHdGd_2tCMjsIRnwJXd31FmrZUuLfMkpQ77UJxKsgdmKN3k",
-        "Esthétique Vinewood": "https://discord.com/api/webhooks/1341812837198204938/LkcFVLgefq-H3XUFJacbv5tQVQVYkF9sbhhUvYBdBc7i3XnXeNSgCn1uJbhPts6hKmhV",
-        "Esthétique Sandy": "https://discord.com/api/webhooks/1396659593844887582/r3hWwNdm0xmddErd1IQaJaUKXYtKeRwCMocihG-21OSNvc6coY5kfw5P9tKLpzR_Z2N6",
-        "Yellow Jack": "https://discord.com/api/webhooks/1338977748454080542/AuxUojInxgt-d8ThhBph6FgXLKz478FBSTO2YwuNN3CrSW3z5AO8ZXuimVOlkTUb44CO",
-        "Vice Room": "https://discord.com/api/webhooks/1396659841384189985/yl9Dnj89FEBjOS8eWu4yFbVvPJ6oyMw-he_TbjAWL3FkUEAY42Fiq01wiZE4hQNMeQY-",
-        "Dock Tease": "https://discord.com/api/webhooks/1326238588962345040/iZV84lPTZnK-uO9zrTP-hJ6FfSThscc9nOzLX98z5O3zwT3FgJSrMpN6nBOXM_Vwqiiv",
-        "Maze Event": "https://discord.com/api/webhooks/1348804922509885611/jzFZCASkxAdRRLcoxyNG-_ep8RTcvIOgSu9L2u01ejpH0JCqe9s3bXou6JFlmtZfqvSr",
-        "Pearl's": "https://discord.com/api/webhooks/1326239289402458112/aR-Fs0cUZ8DughnVbdMZ86ETNgI66g68DVqTIWaWmv5yZNb6LFOKKd8VjllbhSf4lmUn",
-        "Hen House": "https://discord.com/api/webhooks/1326239202639220847/LCqAUhvtG4CpWnxxDHb7ttzBCgm-xmZBE35P9mCMm70Di85aPIn35z94l6CR0hVJN7FL",
-        "Uwu Café": "https://discord.com/api/webhooks/1354130304704708809/pV_p6WVPR8Fc6_TjzPB9ZCaHo1b3OAk93xWzuiwZcql2mqujtG5E8GYi-GU3YX_kIZpb",
-        "Delight": "https://discord.com/api/webhooks/1326233862367612969/Z09SyyohE_8jKLfbBAF6ejNF_XQmv7aDg4eWug0ICiA5WJk2Icx_-Enpt8MOlCKPgiOk",
-        "Rex Diner": "https://discord.com/api/webhooks/1326239364686024816/UTGBQNFl2b8pPRUm9RaDZiMZazzSTWrAwePa3Spj9ujzvKZMizKabL071fHqxGz2QIGu",
-        "Paradiso": "https://discord.com/api/webhooks/1396660996449239051/-NxbdaqQ1cU1kaVoenZQnnYJQ-KqMRQfLy22X0-qPcn9wcsixdBsw78sWvB-ZaTJ-yDJ",
-        "LD Organics": "https://discord.com/api/webhooks/1326239516943450247/pP3N1zB_x9ueD15B-HDd7XzpnFWNGgW7gMEX_-F7H_cdQEhLPTsiXfQSP-1atrF9rKrZ"
-      };
 
       let itemList = "";
       order.forEach(item => {
@@ -119,7 +118,7 @@
       });
 
       const payload = {
-        content: "<@>", // mention rôle
+        content: "<@&1297858230495739915>", // Mention du rôle
         embeds: [
           {
             title: "🧾 Nouvelle commande entreprise",
@@ -162,33 +161,22 @@
         ]
       };
 
-      // Envoi au webhook général
       fetch(generalWebhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
-      })
-      .then(response => {
-        console.log("Envoi webhook général status:", response.status);
-        if (!response.ok) throw new Error("Erreur lors de l'envoi au webhook général");
-
-        // Envoi webhook spécifique si existe
+      }).then(response => {
+        if (!response.ok) throw new Error("Erreur sur le webhook général");
         if (companyWebhooks[entreprise]) {
           return fetch(companyWebhooks[entreprise], {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
-          })
-          .then(response => {
-            console.log(`Envoi webhook spécifique (${entreprise}) status:`, response.status);
-            if (!response.ok) throw new Error(`Erreur lors de l'envoi au webhook spécifique pour ${entreprise}`);
           });
         }
-      })
-      .then(() => {
+      }).then(() => {
         alert("✅ Commande envoyée sur Discord !");
-      })
-      .catch(err => {
+      }).catch(err => {
         console.error("Erreur Discord webhook:", err);
         alert("❌ Erreur lors de l'envoi vers Discord.");
       });
