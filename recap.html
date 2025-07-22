@@ -175,7 +175,8 @@
           });
         }
       }).then(() => {
-        alert("✅ Commande envoyée sur Discord !");
+        // Redirige vers la page de remerciement après envoi réussi
+        window.location.href = "merci.html";
       }).catch(err => {
         console.error("Erreur Discord webhook:", err);
         alert("❌ Erreur lors de l'envoi vers Discord.");
