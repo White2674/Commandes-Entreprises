@@ -9,8 +9,8 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: url('https://cdn.discordapp.com/attachments/1382360021215477872/1397635530883072112/image.png?ex=68827105&is=68811f85&hm=5da312bee20ca50b72cb078ae4c95bddfb46e5a316c9c92aa048a44a820b1a8f&') no-repeat center center fixed;
+      font-family: 'Segoe UI', 'Poppins', sans-serif;
+      background: url('https://cdn.discordapp.com/attachments/1382360021215477872/1397635530883072112/image.png') no-repeat center center fixed;
       background-size: cover;
       height: 100vh;
       display: flex;
@@ -20,12 +20,13 @@
 
     .bubble {
       background: rgba(255, 255, 255, 0.92);
-      padding: 40px;
+      padding: 40px 30px;
       border-radius: 16px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
       max-width: 90%;
       width: 400px;
       text-align: center;
+      animation: fadeIn 0.6s ease;
     }
 
     .bubble h1 {
@@ -37,6 +38,11 @@
     .bubble p {
       font-size: 1em;
       color: #333;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
