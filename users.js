@@ -6,7 +6,7 @@ const users = [
   { username: "admin", password: "white.2674" },
   { username: "Pearl's", password: "482391" },
   { username: "Hen House", password: "947203" },
-  { username: "Uwu Café", password: "628340" },
+  { username: "Custom Caffe", password: "628340" },
   { username: "Delight", password: "130982" },
   { username: "Rex Diner", password: "562713" },
   { username: "Paradiso", password: "792134" },
